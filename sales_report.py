@@ -1,19 +1,37 @@
+import sys
+
 """Generate sales report showing total melons each salesperson sold."""
 '''Anna Parker|1881.91|13
 name|total amount for order|total melons sold'''
 
-sales_records = {}
+def format_report(file = sys.argv[1]):
+    '''opens and formats the file into a dictionary
+    
+    keys are the salesperson names, value is the total melons sold'''
 
-f = open('sales-report.txt')
-##iterates through the file line by line (\n to \n)
-for line in f:
-    line = line.rstrip()##clears the \nbreaks
-    entries = line.split('|')##creates a list for each item in line
-    salesperson = entries[0]##establishes variable for saleperson name
-    melons = int(entries[2])##establishes variable for total melons sold
+    report = open(file)
+    sales_records = {}
 
-    sales_records[salesperson] = sales_records.get(salesperson, 0) + melons
+    for line in report:
+        line = line.rstrip()
+        record = line.split("|")
+
+        name, cost, melons = record
+        melons = int(melons)
+        cost = float(melons)
+
+        sales_records[name] = sales_records.get(name, 0) + melons
+
+    return sales_records
 
 
-for sale in sorted(sales_records):
-    print(f"{sale} sold {sales_records[sale]} melons.")
+def print_report(sales_record):
+    '''prints out a report of how many melons each sales person sold
+    
+    takes in a dictionary with keys as names and values as melons sold'''
+
+    for salesperson, melons_sold in sorted(sales_record.items()):
+        print(f"{salesperson} sold {melons_sold} melons.")
+
+
+print_report(format_report())
