@@ -9,19 +9,20 @@ def format_report(file = sys.argv[1]):
     
     keys are the salesperson names, value is the total melons sold'''
 
-    report = open(file)
     sales_records = {}
 
-    for line in report:
-        line = line.rstrip()
-        record = line.split("|")
+    with open(file) as report:
+        for line in report:
+            line = line.rstrip()
+            record = line.split("|")
 
-        name, cost, melons = record
-        melons = int(melons)
-        cost = float(melons)
+            name, cost, melons = record
+            melons = int(melons)
+            cost = float(melons)
 
-        sales_records[name] = sales_records.get(name, 0) + melons
+            sales_records[name] = sales_records.get(name, 0) + melons
 
+    report.close()
     return sales_records
 
 
